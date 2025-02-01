@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="404" />
+    <meta name="description" content="Dr Ocelot's contact info." />
     <link
       rel="preload"
       href="/font/noto-sans.woff2"
@@ -17,7 +17,7 @@
       type="font/woff2"
       crossorigin="anonymous"
     />
-    <title>Dr Ocelot (404)</title>
+    <title>Dr Ocelot Contact</title>
     <style>
       @font-face {
         font-family: "Noto Sans";
@@ -43,7 +43,7 @@
         color: #000;
         background-color: #fff;
         max-width: 50em;
-        text-align: center;
+        text-align: justify;
         font-family: "Noto Sans", sans-serif;
         margin: 0 auto;
         padding: 12px;
@@ -56,8 +56,9 @@
         letter-spacing: 0.25em;
         text-transform: uppercase;
       }
+
       canvas {
-        filter: invert(1);
+        margin-bottom: 30px;
       }
       a {
         color: #de34eb;
@@ -74,9 +75,6 @@
           background-color: #121212;
           color: #ffffff;
         }
-        canvas {
-          filter: none;
-        }
         a {
           color: #9910a2;
         }
@@ -89,28 +87,65 @@
     </style>
   </head>
   <body>
-    <canvas id="c404" width="600" height="300"></canvas>
+    <h1><a href="/">[&lt;&lt;]</a> Contact</h1>
+    <hr />
+    <h2>Personal</h2>
     <p>
-      I'm sorry, but there is no page under that address. Would you like to
-      return to the <strong><a href="/">root?</a></strong>
+      This is my personal space, so I might not answer. Thank you for
+      understanding.
     </p>
+    <canvas id="personal" width="600" height="50"></canvas>
+    <h2>TETR.IO</h2>
+    <p>
+      If you have any questions related to my work at TETR.IO, please send it to
+      this email. If you send them to my personal email, I will unfortunately
+      have to ignore it.
+    </p>
+    <canvas id="tetrio" width="600" height="50"></canvas>
 
     <script>
+      /*
+       This is the worst fucking obfuscation I've done in my life.
+       And code, honestly. If I cared more I'd make it WebGL. Maybe one day.
+       Won't really stop OCR.
+      */
       const canvasData = [
         {
-          id: "c404",
-          text: "404",
+          id: "personal",
+          text: [
+            250, 251, 238, 184, 253, 247, 243, 235, 232, 243, 245, 241, 245,
+            235, 238, 226, 189, 225, 232,
+          ],
+          offset: 123,
+        },
+        {
+          id: "tetrio",
+          text: [
+            415, 408, 348, 415, 416, 400, 414, 361, 412, 406, 402, 394, 391,
+            402, 404, 400, 404, 394, 397, 385,
+          ],
+          offset: 285,
         },
       ];
 
-      const fontSize = 300;
-      const letterSpacing = 150;
-      const positionRangeAll = 6;
-      const angleRangeAll = 0.2;
-      const positionRange = 2;
-      const angleRange = 0.01;
+      const fontSize = 40;
+      const letterSpacing = 28;
+      const positionRange = 3;
+      const angleRange = 0.2;
       const frameInterval = 294.12;
       let last = Number.MIN_SAFE_INTEGER;
+
+      const advanceOverrides = new Map([
+        ["@", 1.4],
+        [".", 0.5],
+        ["c", 0.8],
+        ["e", 0.9],
+        ["i", 0.5],
+        ["l", 0.5],
+        ["m", 1.4],
+        ["r", 0.8],
+        ["t", 0.7],
+      ]);
 
       function isDarkModePreferred() {
         return (
@@ -127,7 +162,7 @@
         }
         last = now;
 
-        canvasData.forEach(({ id, text }) => {
+        canvasData.forEach(({ id, text, offset }) => {
           const canvas = document.getElementById(id);
           const ctx = canvas.getContext("2d");
           const x = canvas.width / 2;
@@ -135,42 +170,31 @@
 
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           ctx.font = `bold ${fontSize}px serif`;
+          if (isDarkModePreferred()) {
+            ctx.fillStyle = "white";
+          } else {
+            ctx.fillStyle = "black";
+          }
           ctx.textBaseline = "middle";
-          ctx.textAlign = "center";
 
-          ctx.globalCompositeOperation = "screen";
-
-          const colors = ["#ff0000", "#00ff00", "#0000ff"];
-
-          let caretX = x - ((text.length - 1) * letterSpacing) / 2;
-
-          for (let i = 0; i < text.length; i++) {
-            const jitterXAll = (Math.random() - 0.5) * positionRangeAll;
-            const jitterYAll = (Math.random() - 0.5) * positionRangeAll;
-            const jitterAngleAll = (Math.random() - 0.5) * angleRangeAll;
-            const char = text[i];
+          let caretX = 0;
+          for (let i = text.length - 1; i >= 0; i--) {
             ctx.save();
+            const char = String.fromCharCode(
+              text[i] - (text.length - 1 - i) - offset,
+            );
 
-            for (const color of colors) {
-              ctx.save();
-              ctx.fillStyle = color;
+            const jitterX = (Math.random() - 0.5) * positionRange;
+            const jitterY = (Math.random() - 0.5) * positionRange;
+            const jitterAngle = (Math.random() - 0.5) * angleRange;
+            const advance = advanceOverrides.get(char) ?? 1;
 
-              const jitterX = (Math.random() - 0.5) * positionRange;
-              const jitterY = (Math.random() - 0.5) * positionRange;
-              const jitterAngle = (Math.random() - 0.5) * angleRange;
-
-              ctx.translate(
-                caretX + jitterX + jitterXAll,
-                y + jitterY + jitterXAll,
-              );
-              ctx.rotate(jitterAngle + jitterAngleAll);
-              ctx.fillText(char, 0, 0);
-
-              ctx.restore();
-            }
+            ctx.translate(caretX + jitterX, y + jitterY);
+            ctx.rotate(jitterAngle);
+            ctx.fillText(char, 0, 0);
 
             ctx.restore();
-            caretX += letterSpacing;
+            caretX += letterSpacing * advance;
           }
         });
         requestAnimationFrame(drawAll);

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="description" content="Dr Ocelot's personal website." />
+    <link
+      rel="preload"
+      href="/font/noto-sans.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/font/noto-sans-italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <title>Dr Ocelot</title>
+    <style>
+      @font-face {
+        font-family: "Noto Sans";
+        src:
+          url("/font/noto-sans.woff2") format("woff2"),
+          url("/font/noto-sans.ttf") format("truetype");
+        font-weight: 100 900;
+        font-stretch: 62.5% 100%;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Noto Sans Italic";
+        src:
+          url("/font/noto-sans-italic.woff2") format("woff2"),
+          url("/font/noto-sans-italic.ttf") format("truetype");
+        font-weight: 100 900;
+        font-stretch: 62.5% 100%;
+        font-style: italic;
+        font-display: swap;
+      }
+      body {
+        color: #000;
+        background-color: #fff;
+        max-width: 50em;
+        text-align: justify;
+        font-family: "Noto Sans", sans-serif;
+        margin: 0 auto;
+        padding: 12px;
+      }
+      h1 {
+        font-weight: 100;
+      }
+      h2 {
+        font-weight: 800;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+      }
+      a {
+        color: #de34eb;
+        text-decoration: none;
+      }
+
+      a:visited,
+      a:hover,
+      a:active {
+        color: #9910a2;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: #121212;
+          color: #ffffff;
+        }
+        a {
+          color: #9910a2;
+        }
+
+        a:visited,
+        a:hover,
+        a:active {
+          color: #de34eb;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Dr Ocelot</h1>
+    <hr />
+    <h2>Links</h2>
+    <p><em>Anything with "&gt;&gt;" is external.</em></p>
+    <h3>Me</h3>
+    <ul>
+      <li>
+        <a href="https://www.youtube.com/@doktorocelot">&gt;&gt; YouTube</a>
+      </li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+    <h3>Me @ TETR.IO</h3>
+    <ul>
+      <li><a href="/tetriomusicuse/">TETR.IO OST Usage Policy</a></li>
+      <li><a href="https://tetr.io/">&gt;&gt; Play TETR.IO</a></li>
+      <li>
+        <a href="https://merch.tetr.io/zenith-tower-ost/"
+          >&gt;&gt; Buy Zenith Tower (TETR.IO Original Game Soundtrack)</a
+        >
+      </li>
+      <li><a href="/contact/">Contact</a></li>
+    </ul>
+  </body>
+</html>
