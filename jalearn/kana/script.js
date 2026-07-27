@@ -1283,7 +1283,6 @@ function genTables() {
   ]);
 }
 
-genTables();
 
 function showTableSettings() {
   for (const [kana, td] of kanaButtons) {
@@ -1295,7 +1294,6 @@ function showTableSettings() {
   }
 }
 
-showTableSettings();
 
 const roHep = document.getElementById("ro-hep");
 const roNi = document.getElementById("ro-ni");
@@ -1369,7 +1367,6 @@ advInst.onclick = () => {
   showOtherSettings();
 };
 
-showOtherSettings();
 
 async function loadSound() {
   const sprites = await fetch("kana.json");
@@ -1394,5 +1391,8 @@ settingsToggle.onclick = () => {
 
 loadSound();
 loadSettings();
+showOtherSettings();
+genTables();
+showTableSettings();
 
 nextKana();
