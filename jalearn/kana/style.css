@@ -1,0 +1,194 @@
+:root {
+  --bg-color: #fff;
+  --fg-color: #000;
+  --hover-color: #555;
+  --wrong-color: #e92a35;
+  --correct-color: #61ad3b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fg-color: #fff;
+    --bg-color: #121212;
+    --hover-color: #aaa;
+    --wrong-color: #ec464f;
+    --correct-color: #6cbf43;
+  }
+}
+
+@font-face {
+  font-family: "Noto Sans";
+  src:
+    url("/font/noto-sans.woff2") format("woff2"),
+    url("/font/noto-sans.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans Italic";
+  src:
+    url("/font/noto-sans-italic.woff2") format("woff2"),
+    url("/font/noto-sans-italic.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-style: italic;
+  font-display: swap;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--fg-color);
+  font-family: "Noto Sans", sans-serif;
+}
+
+input[type="text"] {
+  color: var(--fg-color);
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="text"].main-input {
+  font-size: 2em;
+  border: 0.1em solid var(--fg-color);
+  border-radius: 0.2em;
+  padding: 0.25em;
+  text-align: center;
+  width: 5em;
+}
+
+.main-game {
+  text-align: center;
+}
+
+.kana {
+  font-size: 4em;
+  margin-bottom: 0.25lh;
+}
+
+.centered {
+  width: fit-content;
+  margin: auto;
+}
+
+.settings table {
+  font-size: 1.5em;
+}
+
+.romaji {
+  min-height: 1lh;
+  font-size: 1.5em;
+}
+
+.table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll table {
+  width: max-content;
+  border-collapse: collapse;
+}
+
+.clickable {
+  transition-property: color background-color;
+  transition-duration: 0.05s;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.clickable:not(.on):hover {
+  color: var(--hover-color);
+}
+
+.clickable.on:hover {
+  background-color: var(--hover-color);
+}
+
+.toggle {
+  text-align: center;
+}
+
+.toggle div {
+  padding: 0.25em;
+}
+
+.toggle .label {
+  font-weight: bold;
+  margin-bottom: 0.2em;
+  outline-color: var(--fg-color);
+}
+
+.toggle .option {
+  outline: var(--fg-color) 0.1em solid;
+}
+
+.on {
+  background-color: var(--fg-color);
+  color: var(--bg-color);
+}
+
+.fade {
+  animation-name: fade-in;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear;
+  animation-direction: forwards;
+  animation-fill-mode: forwards;
+}
+
+.wrong {
+  animation-name: wrong;
+  animation-duration: 0.125s;
+  animation-iteration-count: 4;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+.correct {
+  animation-name: correct;
+  animation-duration: 0.125s;
+  animation-iteration-count: 4;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes wrong {
+  from {
+    color: var(--fg-color);
+  }
+  to {
+    color: var(--wrong-color);
+  }
+}
+
+@keyframes correct {
+  from {
+    color: var(--fg-color);
+  }
+  to {
+    color: var(--correct-color);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}

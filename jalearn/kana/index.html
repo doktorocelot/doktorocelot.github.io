@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script src="script.js" defer></script>
+    <title>Kana Practice</title>
+  </head>
+  <body>
+    <div class="main-game">
+      <div class="romaji" id="romaji-correction"></div>
+      <div class="kana" id="kana-display"></div>
+      <div class="input">
+        <input type="text" class="main-input" id="kana-input" autofocus />
+      </div>
+    </div>
+    <div class="centered">
+      <h3 class="clickable" id="settings-toggle">Show Settings</h3>
+    </div>
+    <div class="settings hidden" id="settings">
+      <div class="centered">
+        <div class="toggle">
+          <div class="label">Audio:</div>
+          <div class="option clickable" id="audio-on">On</div>
+          <div class="option clickable" id="audio-off">Off</div>
+        </div>
+      </div>
+      <br>
+      <div class="centered">
+        <div class="toggle">
+          <div class="label">Advance Speed:</div>
+          <div class="option clickable" id="adv-reg">Regular</div>
+          <div class="option clickable" id="adv-inst">Instant</div>
+        </div>
+      </div>
+      <br>
+      <div class="centered">
+        <div class="toggle">
+          <div class="label">Romaji Preference:</div>
+          <div class="option clickable" id="ro-hep">Hepburn (shi, chi…)</div>
+          <div class="option clickable" id="ro-ni">Nihon-shiki (si, ti…)</div>
+        </div>
+      </div>
+      <div class="centered">
+        <h1>Single</h1>
+      </div>
+      <div class="table-scroll centered">
+        <table id="hiragana-standard"></table>
+      </div>
+      <div class="centered">
+        <h1>Combo</h1>
+      </div>
+      <div class="table-scroll centered">
+        <table id="hiragana-combo"></table>
+      </div>
+    </div>
+  </body>
+</html>
