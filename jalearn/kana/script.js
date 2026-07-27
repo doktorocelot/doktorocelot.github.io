@@ -32,6 +32,8 @@ let audioCtx = new AudioContext();
 let soundIsReady = false;
 let currentPlaying = null;
 
+let disabledAnswer = null;
+
 let wasWrong = false;
 let totalAll = 0;
 let totalCorrect = 0;
@@ -86,6 +88,10 @@ function playCurrent() {
 }
 
 function submitAnswer(e) {
+  if (disabledAnswer) {
+    kanaInput.value = disabledAnswer;
+    return;
+  }
   const val = kanaInput.value;
 
   if (isCorrect(val)) {
@@ -99,13 +105,13 @@ function submitAnswer(e) {
     kanaDisplay.classList.remove("fade");
     kanaDisplay.classList.remove("wrong");
     if (settings.advAnim) {
-      kanaInput.disabled = true;
+      disabledAnswer = val;
       kanaDisplay.classList.add("correct");
       playCurrent();
       setTimeout(() => {
         nextKana();
+        disabledAnswer = null;
         kanaInput.value = "";
-        kanaInput.disabled = false;
         kanaInput.focus();
       }, 500);
     } else {
