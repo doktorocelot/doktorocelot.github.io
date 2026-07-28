@@ -1,9 +1,19 @@
 :root {
+  --font-gothic: "Noto Sans", "JA_LEARN_GOTHIC", sans-serif;
+  --font-mincho: "Noto Serif", "JA_LEARN_MINCHO", serif;
+  --font-written-calligraphic: "JA_LEARN_WRITTEN_CALLIGRAPHIC", serif;
+  --font-written-playful: "JA_LEARN_WRITTEN_PLAYFUL", serif;
+  --font-dot-matrix: "JA_LEARN_DOT_MATRIX", serif;
+  --font-nes: "JA_LEARN_NES_EN", "JA_LEARN_NES", serif;
+  --font-brush: "JA_LEARN_BRUSH", serif;
+  --font-kana: var(--font-gothic);
+  --kana-size: 1rem;
   --bg-color: #fff;
   --fg-color: #000;
   --hover-color: #555;
   --wrong-color: #e92a35;
   --correct-color: #61ad3b;
+  --gold-color: #ff6b03;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -13,6 +23,7 @@
     --hover-color: #aaa;
     --wrong-color: #ec464f;
     --correct-color: #6cbf43;
+    --gold-color: #ff8f40;
   }
 }
 
@@ -28,6 +39,17 @@
 }
 
 @font-face {
+  font-family: "Noto Serif";
+  src:
+    url("/font/noto-serif.woff2") format("woff2"),
+    url("/font/noto-serif.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Noto Sans Italic";
   src:
     url("/font/noto-sans-italic.woff2") format("woff2"),
@@ -35,6 +57,88 @@
   font-weight: 100 900;
   font-stretch: 62.5% 100%;
   font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JA_LEARN_GOTHIC";
+  src:
+    url("/font/ja/gothic.woff2") format("woff2"),
+    url("/font/ja/gothic.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JA_LEARN_MINCHO";
+  src:
+    url("/font/ja/mincho.woff2") format("woff2"),
+    url("/font/ja/mincho.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 62.5% 100%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JA_LEARN_WRITTEN_CALLIGRAPHIC";
+  src:
+    url("/font/ja/written-calligraphic.woff2") format("woff2"),
+    url("/font/ja/written-calligraphic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JA_LEARN_WRITTEN_PLAYFUL";
+  src:
+    url("/font/ja/written-playful.woff2") format("woff2"),
+    url("/font/ja/written-playful.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JA_LEARN_DOT_MATRIX";
+  src:
+    url("/font/ja/dot-matrix.woff2") format("woff2"),
+    url("/font/ja/dot-matrix.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JA_LEARN_NES";
+  src:
+    url("/font/ja/nes.woff2") format("woff2"),
+    url("/font/ja/nes.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JA_LEARN_NES_EN";
+  src:
+    url("/font/ja/nes-en.woff2") format("woff2"),
+    url("/font/ja/nes-en.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JA_LEARN_BRUSH";
+  src:
+    url("/font/ja/brush.woff2") format("woff2"),
+    url("/font/ja/brush.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
   font-display: swap;
 }
 
@@ -55,19 +159,22 @@ input[type="text"] {
 }
 
 input[type="text"].main-input {
-  font-size: 2em;
+  font-family: var(--font-kana);
+  font-size: 2rem;
   border: 0.1em solid var(--fg-color);
   border-radius: 0.2em;
   padding: 0.25em;
   text-align: center;
-  width: 5em;
+  width: 8em;
 }
 
 .main-game {
   text-align: center;
+  font-size: var(--kana-size);
 }
 
 .kana {
+  font-family: var(--font-kana);
   font-size: 4em;
   margin-bottom: 0.25lh;
 }
@@ -82,8 +189,20 @@ input[type="text"].main-input {
 }
 
 .romaji {
+  font-family: var(--font-kana);
   min-height: 1lh;
   font-size: 1.5em;
+}
+
+.results div {
+  min-height: 1.2lh;
+}
+
+.results {
+  width: 17rem;
+  font-size: 1.2em;
+  margin: auto;
+  margin-top: 1em;
 }
 
 .table-scroll {
@@ -137,6 +256,14 @@ input[type="text"].main-input {
   color: var(--bg-color);
 }
 
+#re-correct {
+  color: var(--correct-color)
+}
+
+#re-wrong {
+  color: var(--wrong-color)
+}
+
 .fade {
   animation-name: fade-in;
   animation-duration: 0.2s;
@@ -162,8 +289,47 @@ input[type="text"].main-input {
   animation-direction: alternate;
 }
 
+.gold {
+  animation-name: gold;
+  animation-duration: 1s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+  animation-direction: forwards;
+  animation-fill-mode: forwards;
+}
+
 .hidden {
   display: none;
+}
+
+.goth {
+  font-family: var(--font-gothic);
+}
+
+.min {
+  font-family: var(--font-mincho);
+}
+
+.wra {
+  font-family: var(--font-written-calligraphic);
+}
+
+.wrb {
+  font-family: var(--font-written-playful);
+}
+
+.dotm {
+  font-family: var(--font-dot-matrix);
+}
+
+.nes {
+  padding: 1em !important;
+  font-size: 0.5em;
+  font-family: var(--font-nes);
+}
+
+.brush {
+  font-family: var(--font-brush);
 }
 
 @keyframes wrong {
@@ -181,6 +347,16 @@ input[type="text"].main-input {
   }
   to {
     color: var(--correct-color);
+  }
+}
+
+
+@keyframes gold {
+  from {
+    color: var(--gold-color);
+  }
+  to {
+    color: var(--fg-color);
   }
 }
 

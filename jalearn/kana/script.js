@@ -4,6 +4,10 @@
 const kanaDisplay = document.getElementById("kana-display");
 const kanaInput = document.getElementById("kana-input");
 const romajiCorrection = document.getElementById("romaji-correction");
+const resultsRemain = document.getElementById("re-remain");
+const resultsCorrect = document.getElementById("re-correct");
+const resultsWrong = document.getElementById("re-wrong");
+const resultsStars = document.getElementById("re-stars");
 kanaInput.oninput = submitAnswer;
 kanaInput.value = "";
 
@@ -35,13 +39,16 @@ let currentPlaying = null;
 let disabledAnswer = null;
 
 let wasWrong = false;
-let totalAll = 0;
+let totalWrong = 0;
 let totalCorrect = 0;
+let perfectGames = -1;
 
 let settings = {
   ro: "hepburn",
   audio: true,
   advAnim: true,
+  returnsToBag: false,
+  font: "goth",
 };
 
 function pick(array) {
@@ -54,10 +61,20 @@ function pull(array) {
 }
 
 function nextKana() {
-  if (bag.length === 0) bag = [...currentPool];
+  if (bag.length === 0) {
+    if (totalWrong === 0) {
+      perfectGames++;
+    } else {
+      perfectGames = 0;
+    }
+    resetCurrentResults();
+    bag = [...currentPool];
+  }
+  drawResults();
   current = pull(bag) ?? standardHiragana[0];
   kanaDisplay.textContent = current.kana;
-  kanaDisplay.classList.remove("correct");
+  kanaDisplay.classList.remove("correct", "wrong", "fade");
+  void kanaDisplay.offsetWidth;
   kanaDisplay.classList.add("fade");
 }
 
@@ -87,6 +104,24 @@ function playCurrent() {
   currentPlaying.start(0, sprite.start, len);
 }
 
+let lastPerfectGames = -1;
+let lastBagCount = 0;
+
+function drawResults() {
+  perfectGames = Math.max(0, perfectGames);
+  resultsRemain.textContent = bag.length;
+  resultsCorrect.textContent = totalCorrect;
+  resultsWrong.textContent = totalWrong;
+  resultsStars.textContent =
+    perfectGames <= 5 ? "★".repeat(perfectGames) : `★×${perfectGames}`;
+  if (perfectGames > lastPerfectGames) {
+    resultsStars.classList.remove("gold");
+    void resultsStars.offsetWidth;
+    resultsStars.classList.add("gold");
+  }
+  lastPerfectGames = perfectGames;
+}
+
 function submitAnswer(e) {
   if (disabledAnswer) {
     kanaInput.value = disabledAnswer;
@@ -95,8 +130,12 @@ function submitAnswer(e) {
   const val = kanaInput.value;
 
   if (isCorrect(val)) {
-    if (!wasWrong) totalCorrect++;
-    totalAll++;
+    if (wasWrong) {
+      totalWrong++;
+      if (settings.returnsToBag) bag.push(current);
+    } else {
+      totalCorrect++;
+    }
     wasWrong = false;
 
     kanaDisplay.classList.remove("wrong");
@@ -1230,6 +1269,19 @@ function makeTable(table, cols, vowels) {
   }
 }
 
+function resetBag() {
+  bag.length = 0;
+  perfectGames = -1;
+  lastPerfectGames = -1;
+  resetCurrentResults();
+  nextKana();
+}
+
+function resetCurrentResults() {
+  totalCorrect = 0;
+  totalWrong = 0;
+}
+
 function toggleActiveSingle(kana) {
   const index = currentPool.indexOf(kana);
   if (index === -1) {
@@ -1237,7 +1289,7 @@ function toggleActiveSingle(kana) {
   } else {
     currentPool.splice(index, 1);
   }
-  bag.length = 0;
+  resetBag();
   saveSettings();
 }
 
@@ -1247,7 +1299,7 @@ function toggleActiveMultiple(kanas) {
   } else {
     addKanas(kanas);
   }
-  bag.length = 0;
+  resetBag();
   saveSettings();
 }
 
@@ -1283,7 +1335,6 @@ function genTables() {
   ]);
 }
 
-
 function showTableSettings() {
   for (const [kana, td] of kanaButtons) {
     if (currentPool.indexOf(kana) === -1) {
@@ -1294,13 +1345,25 @@ function showTableSettings() {
   }
 }
 
-
 const roHep = document.getElementById("ro-hep");
 const roNi = document.getElementById("ro-ni");
 const audioOn = document.getElementById("audio-on");
 const audioOff = document.getElementById("audio-off");
 const advReg = document.getElementById("adv-reg");
 const advInst = document.getElementById("adv-inst");
+const wrongAway = document.getElementById("wrong-away");
+const wrongIn = document.getElementById("wrong-in");
+
+const fonts = [
+  ["goth", document.getElementById("font-goth"), "font-gothic", 1],
+  ["min", document.getElementById("font-min"), "font-mincho", 1],
+  ["wra", document.getElementById("font-wra"), "font-written-calligraphic", 1],
+  ["wrb", document.getElementById("font-wrb"), "font-written-playful", 1],
+  ["dotm", document.getElementById("font-dotm"), "font-dot-matrix", 1],
+  ["nes", document.getElementById("font-nes"), "font-nes", 0.5],
+  ["brush", document.getElementById("font-brush"), "font-brush", 1],
+];
+
 function showOtherSettings() {
   if (settings.ro === "hepburn") {
     roHep.classList.add("on");
@@ -1325,6 +1388,38 @@ function showOtherSettings() {
     advInst.classList.add("on");
     advReg.classList.remove("on");
   }
+
+  if (settings.returnsToBag) {
+    wrongIn.classList.add("on");
+    wrongAway.classList.remove("on");
+  } else {
+    wrongAway.classList.add("on");
+    wrongIn.classList.remove("on");
+  }
+
+  for (const [name, e, prop, size] of fonts) {
+    if (settings.font === name) {
+      e.classList.add("on");
+      document.documentElement.style.setProperty(
+        "--font-kana",
+        `var(--${prop})`,
+      );
+      document.documentElement.style.setProperty(
+        "--kana-size",
+        `${size.toString()}rem`,
+      );
+    } else {
+      e.classList.remove("on");
+    }
+  }
+}
+
+for (const [name, e] of fonts) {
+  e.onclick = () => {
+    settings.font = name;
+    saveSettings();
+    showOtherSettings();
+  };
 }
 
 roHep.onclick = () => {
@@ -1367,6 +1462,17 @@ advInst.onclick = () => {
   showOtherSettings();
 };
 
+wrongAway.onclick = () => {
+  settings.returnsToBag = false;
+  saveSettings();
+  showOtherSettings();
+};
+
+wrongIn.onclick = () => {
+  settings.returnsToBag = true;
+  saveSettings();
+  showOtherSettings();
+};
 
 async function loadSound() {
   const sprites = await fetch("kana.json");
