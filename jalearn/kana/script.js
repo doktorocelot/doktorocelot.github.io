@@ -49,6 +49,7 @@ let settings = {
   advAnim: true,
   returnsToBag: false,
   font: "goth",
+  displayed: "hiragana",
 };
 
 function pick(array) {
@@ -72,7 +73,7 @@ function nextKana() {
   }
   drawResults();
   current = pull(bag) ?? standardHiragana[0];
-  kanaDisplay.textContent = current.kana;
+  kanaDisplay.textContent = current[settings.displayed];
   kanaDisplay.classList.remove("correct", "wrong", "fade");
   void kanaDisplay.offsetWidth;
   kanaDisplay.classList.add("fade");
@@ -93,8 +94,7 @@ function isOnTrack(val) {
 function playCurrent() {
   if (!soundIsReady) return;
   if (!settings.audio) return;
-  const kana = current.kana;
-  const sprite = audioSprites.spritemap[`${kana}_v2`];
+  const sprite = audioSprites.spritemap[`${current.hiragana}_v2`];
   if (!sprite) return;
   currentPlaying?.stop();
   currentPlaying = audioCtx.createBufferSource();
@@ -180,7 +180,8 @@ function submitAnswer(e) {
 
 const hiragana = [
   {
-    kana: "あ",
+    hiragana: "あ",
+    katakana: "ア",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -189,7 +190,8 @@ const hiragana = [
     nihon: "a",
   },
   {
-    kana: "い",
+    hiragana: "い",
+    katakana: "イ",
     hasDakuten: false,
     isCombo: false,
     row: "i",
@@ -198,7 +200,8 @@ const hiragana = [
     nihon: "i",
   },
   {
-    kana: "う",
+    hiragana: "う",
+    katakana: "ウ",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -207,7 +210,8 @@ const hiragana = [
     nihon: "u",
   },
   {
-    kana: "え",
+    hiragana: "え",
+    katakana: "エ",
     hasDakuten: false,
     isCombo: false,
     row: "e",
@@ -216,7 +220,8 @@ const hiragana = [
     nihon: "e",
   },
   {
-    kana: "お",
+    hiragana: "お",
+    katakana: "オ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -226,7 +231,8 @@ const hiragana = [
   },
 
   {
-    kana: "か",
+    hiragana: "か",
+    katakana: "カ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -235,7 +241,8 @@ const hiragana = [
     nihon: "ka",
   },
   {
-    kana: "き",
+    hiragana: "き",
+    katakana: "キ",
     hasDakuten: false,
     isCombo: false,
     row: "i",
@@ -244,7 +251,8 @@ const hiragana = [
     nihon: "ki",
   },
   {
-    kana: "く",
+    hiragana: "く",
+    katakana: "ク",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -253,7 +261,8 @@ const hiragana = [
     nihon: "ku",
   },
   {
-    kana: "け",
+    hiragana: "け",
+    katakana: "ケ",
     hasDakuten: false,
     isCombo: false,
     row: "e",
@@ -262,7 +271,8 @@ const hiragana = [
     nihon: "ke",
   },
   {
-    kana: "こ",
+    hiragana: "こ",
+    katakana: "コ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -272,7 +282,8 @@ const hiragana = [
   },
 
   {
-    kana: "さ",
+    hiragana: "さ",
+    katakana: "サ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -281,7 +292,8 @@ const hiragana = [
     nihon: "sa",
   },
   {
-    kana: "し",
+    hiragana: "し",
+    katakana: "シ",
     hasDakuten: false,
     isCombo: false,
     row: "i",
@@ -290,7 +302,8 @@ const hiragana = [
     nihon: "si",
   },
   {
-    kana: "す",
+    hiragana: "す",
+    katakana: "ス",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -299,7 +312,8 @@ const hiragana = [
     nihon: "su",
   },
   {
-    kana: "せ",
+    hiragana: "せ",
+    katakana: "セ",
     hasDakuten: false,
     isCombo: false,
     row: "e",
@@ -308,7 +322,8 @@ const hiragana = [
     nihon: "se",
   },
   {
-    kana: "そ",
+    hiragana: "そ",
+    katakana: "ソ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -318,7 +333,8 @@ const hiragana = [
   },
 
   {
-    kana: "た",
+    hiragana: "た",
+    katakana: "タ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -327,7 +343,8 @@ const hiragana = [
     nihon: "ta",
   },
   {
-    kana: "ち",
+    hiragana: "ち",
+    katakana: "チ",
     hasDakuten: false,
     isCombo: false,
     row: "i",
@@ -336,7 +353,8 @@ const hiragana = [
     nihon: "ti",
   },
   {
-    kana: "つ",
+    hiragana: "つ",
+    katakana: "ツ",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -345,7 +363,8 @@ const hiragana = [
     nihon: "tu",
   },
   {
-    kana: "て",
+    hiragana: "て",
+    katakana: "テ",
     hasDakuten: false,
     isCombo: false,
     row: "e",
@@ -354,7 +373,8 @@ const hiragana = [
     nihon: "te",
   },
   {
-    kana: "と",
+    hiragana: "と",
+    katakana: "ト",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -364,7 +384,8 @@ const hiragana = [
   },
 
   {
-    kana: "な",
+    hiragana: "な",
+    katakana: "ナ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -373,7 +394,8 @@ const hiragana = [
     nihon: "na",
   },
   {
-    kana: "に",
+    hiragana: "に",
+    katakana: "ニ",
     hasDakuten: false,
     isCombo: false,
     row: "i",
@@ -382,7 +404,8 @@ const hiragana = [
     nihon: "ni",
   },
   {
-    kana: "ぬ",
+    hiragana: "ぬ",
+    katakana: "ヌ",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -391,7 +414,8 @@ const hiragana = [
     nihon: "nu",
   },
   {
-    kana: "ね",
+    hiragana: "ね",
+    katakana: "ネ",
     hasDakuten: false,
     isCombo: false,
     row: "e",
@@ -400,7 +424,8 @@ const hiragana = [
     nihon: "ne",
   },
   {
-    kana: "の",
+    hiragana: "の",
+    katakana: "ノ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -410,7 +435,8 @@ const hiragana = [
   },
 
   {
-    kana: "は",
+    hiragana: "は",
+    katakana: "ハ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -419,7 +445,8 @@ const hiragana = [
     nihon: "ha",
   },
   {
-    kana: "ひ",
+    hiragana: "ひ",
+    katakana: "ヒ",
     hasDakuten: false,
     isCombo: false,
     row: "i",
@@ -428,7 +455,8 @@ const hiragana = [
     nihon: "hi",
   },
   {
-    kana: "ふ",
+    hiragana: "ふ",
+    katakana: "フ",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -437,7 +465,8 @@ const hiragana = [
     nihon: "hu",
   },
   {
-    kana: "へ",
+    hiragana: "へ",
+    katakana: "ヘ",
     hasDakuten: false,
     isCombo: false,
     row: "e",
@@ -446,7 +475,8 @@ const hiragana = [
     nihon: "he",
   },
   {
-    kana: "ほ",
+    hiragana: "ほ",
+    katakana: "ホ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -456,7 +486,8 @@ const hiragana = [
   },
 
   {
-    kana: "ま",
+    hiragana: "ま",
+    katakana: "マ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -465,7 +496,8 @@ const hiragana = [
     nihon: "ma",
   },
   {
-    kana: "み",
+    hiragana: "み",
+    katakana: "ミ",
     hasDakuten: false,
     isCombo: false,
     row: "i",
@@ -474,7 +506,8 @@ const hiragana = [
     nihon: "mi",
   },
   {
-    kana: "む",
+    hiragana: "む",
+    katakana: "ム",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -483,7 +516,8 @@ const hiragana = [
     nihon: "mu",
   },
   {
-    kana: "め",
+    hiragana: "め",
+    katakana: "メ",
     hasDakuten: false,
     isCombo: false,
     row: "e",
@@ -492,7 +526,8 @@ const hiragana = [
     nihon: "me",
   },
   {
-    kana: "も",
+    hiragana: "も",
+    katakana: "モ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -502,7 +537,8 @@ const hiragana = [
   },
 
   {
-    kana: "や",
+    hiragana: "や",
+    katakana: "ヤ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -511,7 +547,8 @@ const hiragana = [
     nihon: "ya",
   },
   {
-    kana: "ゆ",
+    hiragana: "ゆ",
+    katakana: "ユ",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -520,7 +557,8 @@ const hiragana = [
     nihon: "yu",
   },
   {
-    kana: "よ",
+    hiragana: "よ",
+    katakana: "ヨ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -530,7 +568,8 @@ const hiragana = [
   },
 
   {
-    kana: "ら",
+    hiragana: "ら",
+    katakana: "ラ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -539,7 +578,8 @@ const hiragana = [
     nihon: "ra",
   },
   {
-    kana: "り",
+    hiragana: "り",
+    katakana: "リ",
     hasDakuten: false,
     isCombo: false,
     row: "i",
@@ -548,7 +588,8 @@ const hiragana = [
     nihon: "ri",
   },
   {
-    kana: "る",
+    hiragana: "る",
+    katakana: "ル",
     hasDakuten: false,
     isCombo: false,
     row: "u",
@@ -557,7 +598,8 @@ const hiragana = [
     nihon: "ru",
   },
   {
-    kana: "れ",
+    hiragana: "れ",
+    katakana: "レ",
     hasDakuten: false,
     isCombo: false,
     row: "e",
@@ -566,7 +608,8 @@ const hiragana = [
     nihon: "re",
   },
   {
-    kana: "ろ",
+    hiragana: "ろ",
+    katakana: "ロ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -576,7 +619,8 @@ const hiragana = [
   },
 
   {
-    kana: "わ",
+    hiragana: "わ",
+    katakana: "ワ",
     hasDakuten: false,
     isCombo: false,
     row: "a",
@@ -585,7 +629,8 @@ const hiragana = [
     nihon: "wa",
   },
   {
-    kana: "を",
+    hiragana: "を",
+    katakana: "ヲ",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -595,7 +640,8 @@ const hiragana = [
   },
 
   {
-    kana: "ん",
+    hiragana: "ん",
+    katakana: "ン",
     hasDakuten: false,
     isCombo: false,
     row: "o",
@@ -605,7 +651,8 @@ const hiragana = [
   },
 
   {
-    kana: "が",
+    hiragana: "が",
+    katakana: "ガ",
     hasDakuten: true,
     isCombo: false,
     row: "a",
@@ -614,7 +661,8 @@ const hiragana = [
     nihon: "ga",
   },
   {
-    kana: "ぎ",
+    hiragana: "ぎ",
+    katakana: "ギ",
     hasDakuten: true,
     isCombo: false,
     row: "i",
@@ -623,7 +671,8 @@ const hiragana = [
     nihon: "gi",
   },
   {
-    kana: "ぐ",
+    hiragana: "ぐ",
+    katakana: "グ",
     hasDakuten: true,
     isCombo: false,
     row: "u",
@@ -632,7 +681,8 @@ const hiragana = [
     nihon: "gu",
   },
   {
-    kana: "げ",
+    hiragana: "げ",
+    katakana: "ゲ",
     hasDakuten: true,
     isCombo: false,
     row: "e",
@@ -641,7 +691,8 @@ const hiragana = [
     nihon: "ge",
   },
   {
-    kana: "ご",
+    hiragana: "ご",
+    katakana: "ゴ",
     hasDakuten: true,
     isCombo: false,
     row: "o",
@@ -651,7 +702,8 @@ const hiragana = [
   },
 
   {
-    kana: "ざ",
+    hiragana: "ざ",
+    katakana: "ザ",
     hasDakuten: true,
     isCombo: false,
     row: "a",
@@ -660,7 +712,8 @@ const hiragana = [
     nihon: "za",
   },
   {
-    kana: "じ",
+    hiragana: "じ",
+    katakana: "ジ",
     hasDakuten: true,
     isCombo: false,
     row: "i",
@@ -669,7 +722,8 @@ const hiragana = [
     nihon: "zi",
   },
   {
-    kana: "ず",
+    hiragana: "ず",
+    katakana: "ズ",
     hasDakuten: true,
     isCombo: false,
     row: "u",
@@ -678,7 +732,8 @@ const hiragana = [
     nihon: "zu",
   },
   {
-    kana: "ぜ",
+    hiragana: "ぜ",
+    katakana: "ゼ",
     hasDakuten: true,
     isCombo: false,
     row: "e",
@@ -687,7 +742,8 @@ const hiragana = [
     nihon: "ze",
   },
   {
-    kana: "ぞ",
+    hiragana: "ぞ",
+    katakana: "ゾ",
     hasDakuten: true,
     isCombo: false,
     row: "o",
@@ -697,7 +753,8 @@ const hiragana = [
   },
 
   {
-    kana: "だ",
+    hiragana: "だ",
+    katakana: "ダ",
     hasDakuten: true,
     isCombo: false,
     row: "a",
@@ -706,7 +763,8 @@ const hiragana = [
     nihon: "da",
   },
   {
-    kana: "ぢ",
+    hiragana: "ぢ",
+    katakana: "ヂ",
     hasDakuten: true,
     isCombo: false,
     row: "i",
@@ -715,7 +773,8 @@ const hiragana = [
     nihon: "di",
   },
   {
-    kana: "づ",
+    hiragana: "づ",
+    katakana: "ヅ",
     hasDakuten: true,
     isCombo: false,
     row: "u",
@@ -724,7 +783,8 @@ const hiragana = [
     nihon: "du",
   },
   {
-    kana: "で",
+    hiragana: "で",
+    katakana: "デ",
     hasDakuten: true,
     isCombo: false,
     row: "e",
@@ -733,7 +793,8 @@ const hiragana = [
     nihon: "de",
   },
   {
-    kana: "ど",
+    hiragana: "ど",
+    katakana: "ド",
     hasDakuten: true,
     isCombo: false,
     row: "o",
@@ -743,7 +804,8 @@ const hiragana = [
   },
 
   {
-    kana: "ば",
+    hiragana: "ば",
+    katakana: "バ",
     hasDakuten: true,
     isCombo: false,
     row: "a",
@@ -752,7 +814,8 @@ const hiragana = [
     nihon: "ba",
   },
   {
-    kana: "び",
+    hiragana: "び",
+    katakana: "ビ",
     hasDakuten: true,
     isCombo: false,
     row: "i",
@@ -761,7 +824,8 @@ const hiragana = [
     nihon: "bi",
   },
   {
-    kana: "ぶ",
+    hiragana: "ぶ",
+    katakana: "ブ",
     hasDakuten: true,
     isCombo: false,
     row: "u",
@@ -770,7 +834,8 @@ const hiragana = [
     nihon: "bu",
   },
   {
-    kana: "べ",
+    hiragana: "べ",
+    katakana: "ベ",
     hasDakuten: true,
     isCombo: false,
     row: "e",
@@ -779,7 +844,8 @@ const hiragana = [
     nihon: "be",
   },
   {
-    kana: "ぼ",
+    hiragana: "ぼ",
+    katakana: "ボ",
     hasDakuten: true,
     isCombo: false,
     row: "o",
@@ -789,7 +855,8 @@ const hiragana = [
   },
 
   {
-    kana: "ぱ",
+    hiragana: "ぱ",
+    katakana: "パ",
     hasDakuten: true,
     isCombo: false,
     row: "a",
@@ -798,7 +865,8 @@ const hiragana = [
     nihon: "pa",
   },
   {
-    kana: "ぴ",
+    hiragana: "ぴ",
+    katakana: "ピ",
     hasDakuten: true,
     isCombo: false,
     row: "i",
@@ -807,7 +875,8 @@ const hiragana = [
     nihon: "pi",
   },
   {
-    kana: "ぷ",
+    hiragana: "ぷ",
+    katakana: "プ",
     hasDakuten: true,
     isCombo: false,
     row: "u",
@@ -816,7 +885,8 @@ const hiragana = [
     nihon: "pu",
   },
   {
-    kana: "ぺ",
+    hiragana: "ぺ",
+    katakana: "ペ",
     hasDakuten: true,
     isCombo: false,
     row: "e",
@@ -825,7 +895,8 @@ const hiragana = [
     nihon: "pe",
   },
   {
-    kana: "ぽ",
+    hiragana: "ぽ",
+    katakana: "ポ",
     hasDakuten: true,
     isCombo: false,
     row: "o",
@@ -835,7 +906,8 @@ const hiragana = [
   },
 
   {
-    kana: "きゃ",
+    hiragana: "きゃ",
+    katakana: "キャ",
     hasDakuten: false,
     isCombo: true,
     row: "ya",
@@ -844,7 +916,8 @@ const hiragana = [
     nihon: "kya",
   },
   {
-    kana: "きゅ",
+    hiragana: "きゅ",
+    katakana: "キュ",
     hasDakuten: false,
     isCombo: true,
     row: "yu",
@@ -853,7 +926,8 @@ const hiragana = [
     nihon: "kyu",
   },
   {
-    kana: "きょ",
+    hiragana: "きょ",
+    katakana: "キョ",
     hasDakuten: false,
     isCombo: true,
     row: "yo",
@@ -863,7 +937,8 @@ const hiragana = [
   },
 
   {
-    kana: "しゃ",
+    hiragana: "しゃ",
+    katakana: "シャ",
     hasDakuten: false,
     isCombo: true,
     row: "ya",
@@ -872,7 +947,8 @@ const hiragana = [
     nihon: "sya",
   },
   {
-    kana: "しゅ",
+    hiragana: "しゅ",
+    katakana: "シュ",
     hasDakuten: false,
     isCombo: true,
     row: "yu",
@@ -881,7 +957,8 @@ const hiragana = [
     nihon: "syu",
   },
   {
-    kana: "しょ",
+    hiragana: "しょ",
+    katakana: "ショ",
     hasDakuten: false,
     isCombo: true,
     row: "yo",
@@ -891,7 +968,8 @@ const hiragana = [
   },
 
   {
-    kana: "ちゃ",
+    hiragana: "ちゃ",
+    katakana: "チャ",
     hasDakuten: false,
     isCombo: true,
     row: "ya",
@@ -900,7 +978,8 @@ const hiragana = [
     nihon: "tya",
   },
   {
-    kana: "ちゅ",
+    hiragana: "ちゅ",
+    katakana: "チュ",
     hasDakuten: false,
     isCombo: true,
     row: "yu",
@@ -909,7 +988,8 @@ const hiragana = [
     nihon: "tyu",
   },
   {
-    kana: "ちょ",
+    hiragana: "ちょ",
+    katakana: "チョ",
     hasDakuten: false,
     isCombo: true,
     row: "yo",
@@ -919,7 +999,8 @@ const hiragana = [
   },
 
   {
-    kana: "にゃ",
+    hiragana: "にゃ",
+    katakana: "ニャ",
     hasDakuten: false,
     isCombo: true,
     row: "ya",
@@ -928,7 +1009,8 @@ const hiragana = [
     nihon: "nya",
   },
   {
-    kana: "にゅ",
+    hiragana: "にゅ",
+    katakana: "ニュ",
     hasDakuten: false,
     isCombo: true,
     row: "yu",
@@ -937,7 +1019,8 @@ const hiragana = [
     nihon: "nyu",
   },
   {
-    kana: "にょ",
+    hiragana: "にょ",
+    katakana: "ニョ",
     hasDakuten: false,
     isCombo: true,
     row: "yo",
@@ -947,7 +1030,8 @@ const hiragana = [
   },
 
   {
-    kana: "ひゃ",
+    hiragana: "ひゃ",
+    katakana: "ヒャ",
     hasDakuten: false,
     isCombo: true,
     row: "ya",
@@ -956,7 +1040,8 @@ const hiragana = [
     nihon: "hya",
   },
   {
-    kana: "ひゅ",
+    hiragana: "ひゅ",
+    katakana: "ヒュ",
     hasDakuten: false,
     isCombo: true,
     row: "yu",
@@ -965,7 +1050,8 @@ const hiragana = [
     nihon: "hyu",
   },
   {
-    kana: "ひょ",
+    hiragana: "ひょ",
+    katakana: "ヒョ",
     hasDakuten: false,
     isCombo: true,
     row: "yo",
@@ -975,7 +1061,8 @@ const hiragana = [
   },
 
   {
-    kana: "みゃ",
+    hiragana: "みゃ",
+    katakana: "ミャ",
     hasDakuten: false,
     isCombo: true,
     row: "ya",
@@ -984,7 +1071,8 @@ const hiragana = [
     nihon: "mya",
   },
   {
-    kana: "みゅ",
+    hiragana: "みゅ",
+    katakana: "ミュ",
     hasDakuten: false,
     isCombo: true,
     row: "yu",
@@ -993,7 +1081,8 @@ const hiragana = [
     nihon: "myu",
   },
   {
-    kana: "みょ",
+    hiragana: "みょ",
+    katakana: "ミョ",
     hasDakuten: false,
     isCombo: true,
     row: "yo",
@@ -1003,7 +1092,8 @@ const hiragana = [
   },
 
   {
-    kana: "りゃ",
+    hiragana: "りゃ",
+    katakana: "リャ",
     hasDakuten: false,
     isCombo: true,
     row: "ya",
@@ -1012,7 +1102,8 @@ const hiragana = [
     nihon: "rya",
   },
   {
-    kana: "りゅ",
+    hiragana: "りゅ",
+    katakana: "リュ",
     hasDakuten: false,
     isCombo: true,
     row: "yu",
@@ -1021,7 +1112,8 @@ const hiragana = [
     nihon: "ryu",
   },
   {
-    kana: "りょ",
+    hiragana: "りょ",
+    katakana: "リョ",
     hasDakuten: false,
     isCombo: true,
     row: "yo",
@@ -1031,7 +1123,8 @@ const hiragana = [
   },
 
   {
-    kana: "ぎゃ",
+    hiragana: "ぎゃ",
+    katakana: "ギャ",
     hasDakuten: true,
     isCombo: true,
     row: "ya",
@@ -1040,7 +1133,8 @@ const hiragana = [
     nihon: "gya",
   },
   {
-    kana: "ぎゅ",
+    hiragana: "ぎゅ",
+    katakana: "ギュ",
     hasDakuten: true,
     isCombo: true,
     row: "yu",
@@ -1049,7 +1143,8 @@ const hiragana = [
     nihon: "gyu",
   },
   {
-    kana: "ぎょ",
+    hiragana: "ぎょ",
+    katakana: "ギョ",
     hasDakuten: true,
     isCombo: true,
     row: "yo",
@@ -1059,7 +1154,8 @@ const hiragana = [
   },
 
   {
-    kana: "じゃ",
+    hiragana: "じゃ",
+    katakana: "ジャ",
     hasDakuten: true,
     isCombo: true,
     row: "ya",
@@ -1068,7 +1164,8 @@ const hiragana = [
     nihon: "zya",
   },
   {
-    kana: "じゅ",
+    hiragana: "じゅ",
+    katakana: "ジュ",
     hasDakuten: true,
     isCombo: true,
     row: "yu",
@@ -1077,7 +1174,8 @@ const hiragana = [
     nihon: "zyu",
   },
   {
-    kana: "じょ",
+    hiragana: "じょ",
+    katakana: "ジョ",
     hasDakuten: true,
     isCombo: true,
     row: "yo",
@@ -1087,7 +1185,8 @@ const hiragana = [
   },
 
   {
-    kana: "ぢゃ",
+    hiragana: "ぢゃ",
+    katakana: "ヂャ",
     hasDakuten: true,
     isCombo: true,
     row: "ya",
@@ -1096,7 +1195,8 @@ const hiragana = [
     nihon: "dya",
   },
   {
-    kana: "ぢゅ",
+    hiragana: "ぢゅ",
+    katakana: "ヂュ",
     hasDakuten: true,
     isCombo: true,
     row: "yu",
@@ -1105,7 +1205,8 @@ const hiragana = [
     nihon: "dyu",
   },
   {
-    kana: "ぢょ",
+    hiragana: "ぢょ",
+    katakana: "ヂョ",
     hasDakuten: true,
     isCombo: true,
     row: "yo",
@@ -1115,7 +1216,8 @@ const hiragana = [
   },
 
   {
-    kana: "びゃ",
+    hiragana: "びゃ",
+    katakana: "ビャ",
     hasDakuten: true,
     isCombo: true,
     row: "ya",
@@ -1124,7 +1226,8 @@ const hiragana = [
     nihon: "bya",
   },
   {
-    kana: "びゅ",
+    hiragana: "びゅ",
+    katakana: "ビュ",
     hasDakuten: true,
     isCombo: true,
     row: "yu",
@@ -1133,7 +1236,8 @@ const hiragana = [
     nihon: "byu",
   },
   {
-    kana: "びょ",
+    hiragana: "びょ",
+    katakana: "ビョ",
     hasDakuten: true,
     isCombo: true,
     row: "yo",
@@ -1143,7 +1247,8 @@ const hiragana = [
   },
 
   {
-    kana: "ぴゃ",
+    hiragana: "ぴゃ",
+    katakana: "ピャ",
     hasDakuten: true,
     isCombo: true,
     row: "ya",
@@ -1152,7 +1257,8 @@ const hiragana = [
     nihon: "pya",
   },
   {
-    kana: "ぴゅ",
+    hiragana: "ぴゅ",
+    katakana: "ピュ",
     hasDakuten: true,
     isCombo: true,
     row: "yu",
@@ -1161,7 +1267,8 @@ const hiragana = [
     nihon: "pyu",
   },
   {
-    kana: "ぴょ",
+    hiragana: "ぴょ",
+    katakana: "ピョ",
     hasDakuten: true,
     isCombo: true,
     row: "yo",
@@ -1256,7 +1363,7 @@ function makeTable(table, cols, vowels) {
       const kana = hiraganaMap.get(column + vowel);
       const td = document.createElement("td");
       if (kana) {
-        td.innerHTML = `<ruby>${kana.kana}<rt>${kana[settings.ro]}</rt></ruby>`;
+        td.innerHTML = `<ruby>${kana[settings.displayed]}<rt>${kana[settings.ro]}</rt></ruby>`;
         td.classList.add("clickable");
       }
       tr.appendChild(td);
@@ -1348,6 +1455,8 @@ function showTableSettings() {
 
 const roHep = document.getElementById("ro-hep");
 const roNi = document.getElementById("ro-ni");
+const scrHiragana = document.getElementById("scr-hiragana");
+const scrKatakana = document.getElementById("scr-katakana");
 const audioOn = document.getElementById("audio-on");
 const audioOff = document.getElementById("audio-off");
 const advReg = document.getElementById("adv-reg");
@@ -1372,6 +1481,14 @@ function showOtherSettings() {
   } else {
     roNi.classList.add("on");
     roHep.classList.remove("on");
+  }
+
+  if (settings.displayed === "hiragana") {
+    scrHiragana.classList.add("on");
+    scrKatakana.classList.remove("on");
+  } else {
+    scrKatakana.classList.add("on");
+    scrHiragana.classList.remove("on");
   }
 
   if (settings.audio) {
@@ -1437,6 +1554,24 @@ roNi.onclick = () => {
   showOtherSettings();
   genTables();
   showTableSettings();
+};
+
+scrHiragana.onclick = () => {
+  settings.displayed = "hiragana";
+  saveSettings();
+  showOtherSettings();
+  genTables();
+  showTableSettings();
+  resetBag();
+};
+
+scrKatakana.onclick = () => {
+  settings.displayed = "katakana";
+  saveSettings();
+  showOtherSettings();
+  genTables();
+  showTableSettings();
+  resetBag();
 };
 
 audioOn.onclick = () => {

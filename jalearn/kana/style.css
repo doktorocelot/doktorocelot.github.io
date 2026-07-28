@@ -250,6 +250,8 @@ input[type="text"].main-input {
 
 .toggle .option {
   outline: var(--fg-color) 0.1em solid;
+  padding-left: 0.25em;
+  padding-right: 0.25em;
 }
 
 .on {
