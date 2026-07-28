@@ -235,6 +235,7 @@ input[type="text"].main-input {
 
 .toggle {
   text-align: center;
+  margin-bottom: 0.7em;
 }
 
 .toggle div {
