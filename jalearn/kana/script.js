@@ -123,6 +123,7 @@ function drawResults() {
 }
 
 function submitAnswer(e) {
+  kanaInput.value = kanaInput.value.toLowerCase();
   if (disabledAnswer) {
     kanaInput.value = disabledAnswer;
     return;
